@@ -1,0 +1,12 @@
+# Godot editor cache
+**/.godot/
+
+# Local raw asset library, do not upload full downloaded packs
+素材库/
+
+# Codex/local agent files
+.agents/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
