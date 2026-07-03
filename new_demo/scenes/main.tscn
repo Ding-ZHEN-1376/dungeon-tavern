@@ -395,7 +395,9 @@ position = Vector2(576, 320)
 position = Vector2(222, 495)
 script = ExtResource("3_2bs0q")
 prompt_text = "按 E：查看酿酒桶"
-action_text = "你查看了酿酒桶。下一阶段这里会打开酿酒菜单。"
+action_text = "你查看了酿酒桶。"
+opens_menu = true
+menu_id = "brewing_barrel"
 
 [node name="Sprite2D" type="Sprite2D" parent="BrewBarrel" unique_id=1054809025]
 position = Vector2(4.7683716e-07, -6.198883e-06)

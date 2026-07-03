@@ -15,6 +15,10 @@ run/main_scene="uid://cbgp66xfaukdx"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+MenuManager="*res://scenes/ui/MenuManager.tscn"
+
 [display]
 
 window/stretch/mode="canvas_items"
