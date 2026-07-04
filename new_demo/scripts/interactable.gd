@@ -2,6 +2,8 @@ extends Area2D
 
 @export var prompt_text: String = "按 E 互动"
 @export var action_text: String = "互动成功"
+@export var opens_menu: bool = false ## 交互是否开启菜单
+@export var menu_id: String = "" ## 开启交互菜单的种类
 
 @onready var prompt_label: Label = $PromptLabel
 
@@ -15,6 +17,10 @@ func _ready() -> void:
 
 func interact() -> void:
 	print(action_text)
+	if opens_menu and menu_id != "":
+		MenuManager.open_menu(menu_id, {
+			"source": self
+		})
 
 
 func _on_body_entered(body: Node2D) -> void:
