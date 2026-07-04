@@ -3,7 +3,8 @@ extends CanvasLayer
 var current_menu: Control = null
 
 var menu_registry := {
-	"brewing_barrel": preload("res://scenes/ui/menus/brewing/BrewingMenu.tscn")
+	"brewing_barrel": preload("res://scenes/ui/menus/brewing/BrewingMenu.tscn"),
+	"warehouse": preload("res://scenes/ui/menus/storage/WarehouseMenu.tscn")
 }
 
 

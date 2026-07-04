@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtsmmhvern6gq"
-path="res://.godot/imported/TilesetWater.png-d2d39e0e07b4f893c87cf4ae0eb68eea.ctex"
+uid="uid://bhd4apckrmtwq"
+path="res://.godot/imported/mushroom_temp.png-f60e2f921e62011fc16cf112fae5f10a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/TilesetWater.png"
-dest_files=["res://.godot/imported/TilesetWater.png-d2d39e0e07b4f893c87cf4ae0eb68eea.ctex"]
+source_file="res://assets/materials/mushroom_temp.png"
+dest_files=["res://.godot/imported/mushroom_temp.png-f60e2f921e62011fc16cf112fae5f10a.ctex"]
 
 [params]
 

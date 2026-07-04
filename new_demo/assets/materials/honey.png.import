@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nj1sy1mxlcjp"
-path="res://.godot/imported/TilesetWallSimple.png-7642be5b0bbc1ddd47b34d5abaf6503a.ctex"
+uid="uid://br8yqhwrcdm15"
+path="res://.godot/imported/honey.png-df407e813003b67ad79ff77a45ad75d5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/TilesetWallSimple.png"
-dest_files=["res://.godot/imported/TilesetWallSimple.png-7642be5b0bbc1ddd47b34d5abaf6503a.ctex"]
+source_file="res://assets/materials/honey.png"
+dest_files=["res://.godot/imported/honey.png-df407e813003b67ad79ff77a45ad75d5.ctex"]
 
 [params]
 
