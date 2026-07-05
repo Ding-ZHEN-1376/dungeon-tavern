@@ -2,17 +2,19 @@ extends CanvasLayer
 
 const SLOT_SCENE := preload("res://scenes/ui/inventory/InventorySlot.tscn")
 const BACKPACK_COLUMNS := 3
-const BACKPACK_SLOT_COUNT := 15
+const PLAYER_INVENTORY_GROUP := "player_inventory"
 
 @onready var panel: PanelContainer = %Panel
 @onready var slots_grid: GridContainer = %SlotsGrid
+
+var inventory_container: Node = null
 
 
 func _ready() -> void:
 	add_to_group("inventory_panel")
 	slots_grid.columns = BACKPACK_COLUMNS
-	_create_slots()
 	hide_panel()
+	call_deferred("refresh_inventory_container")
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -37,11 +39,21 @@ func toggle_panel() -> void:
 	panel.visible = not panel.visible
 
 
+func refresh_inventory_container() -> void:
+	inventory_container = get_tree().get_first_node_in_group(PLAYER_INVENTORY_GROUP)
+	_create_slots()
+
+
 func _create_slots() -> void:
 	for child in slots_grid.get_children():
 		child.queue_free()
 
-	for index in range(BACKPACK_SLOT_COUNT):
+	if inventory_container == null or not inventory_container.has_method("get_slots"):
+		push_warning("InventoryPanel could not find a node in group '%s'." % PLAYER_INVENTORY_GROUP)
+		return
+
+	var slots: Array = inventory_container.get_slots()
+	for index in range(slots.size()):
 		var slot := SLOT_SCENE.instantiate()
 		slots_grid.add_child(slot)
-		slot.setup("backpack", index)
+		slot.setup(inventory_container, index)

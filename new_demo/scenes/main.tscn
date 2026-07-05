@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://88lpvnx1kjay" path="res://assets/sprites/SpriteSheet.png" id="5_tefeu"]
 [ext_resource type="Texture2D" uid="uid://b7eto5tcf7ugl" path="res://assets/tilesets/tileset_bed.png" id="7_o6xl0"]
 [ext_resource type="Texture2D" uid="uid://dj8laekrnuh65" path="res://assets/tilesets/TilesetElement.png" id="8_tipki"]
+[ext_resource type="Script" uid="uid://b8r10kte7hxux" path="res://scripts/inventory/inventory_container.gd" id="8_ya4ey"]
 [ext_resource type="PackedScene" path="res://scenes/ui/inventory/InventoryPanel.tscn" id="9_inventory"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud/TimeHud.tscn" id="10_time_hud"]
 
@@ -554,7 +555,12 @@ offset_right = 160.0
 offset_bottom = -33.0
 text = "Press E: Open warehouse"
 
-[node name="ArenaEntrance" type="Area2D" parent="."]
+[node name="InventoryContainer" type="Node" parent="Warehouse" unique_id=1745891140 groups=["warehouse_inventory"]]
+script = ExtResource("8_ya4ey")
+slot_count = 40
+metadata/_custom_type_script = "uid://b8r10kte7hxux"
+
+[node name="ArenaEntrance" type="Area2D" parent="." unique_id=419412217]
 position = Vector2(1100, 500)
 script = ExtResource("3_2bs0q")
 prompt_text = "按 E：竞技场"
@@ -565,23 +571,28 @@ activity_id = "arena"
 activity_title = "竞技场竞技"
 activity_description = "是否参加竞技场竞技？竞技场只能在夜晚进行，会消耗 1 个时间点。"
 
-[node name="Sprite2D" type="Sprite2D" parent="ArenaEntrance"]
+[node name="Sprite2D" type="Sprite2D" parent="ArenaEntrance" unique_id=1206167419]
 scale = Vector2(3, 3)
 texture = ExtResource("4_tbgi4")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ArenaEntrance"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ArenaEntrance" unique_id=1362800073]
 shape = SubResource("CircleShape2D_interact")
 
-[node name="PromptLabel" type="Label" parent="ArenaEntrance"]
+[node name="PromptLabel" type="Label" parent="ArenaEntrance" unique_id=1555382996]
 offset_left = -64.0
 offset_top = -56.0
 offset_right = 160.0
 offset_bottom = -33.0
 text = "按 E：竞技场"
 
-[node name="TimeHud" parent="." instance=ExtResource("10_time_hud")]
+[node name="TimeHud" parent="." unique_id=1184663422 instance=ExtResource("10_time_hud")]
 
 [node name="InventoryPanel" parent="." unique_id=1628114419 instance=ExtResource("9_inventory")]
 
 [node name="Player_Main" parent="." unique_id=1886580640 instance=ExtResource("2_sugp2")]
 position = Vector2(576, 320)
+SPEED = 180.0
+
+[node name="InventoryContainer" type="Node" parent="Player_Main" unique_id=185161758 groups=["player_inventory"]]
+script = ExtResource("8_ya4ey")
+metadata/_custom_type_script = "uid://b8r10kte7hxux"
