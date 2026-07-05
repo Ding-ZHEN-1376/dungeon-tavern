@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://tests/test_warehouse_inventory_panel_visibility.gd" id="1_warehouse_visibility_test"]
+
+[node name="TestWarehouseInventoryPanelVisibility" type="Node"]
+script = ExtResource("1_warehouse_visibility_test")

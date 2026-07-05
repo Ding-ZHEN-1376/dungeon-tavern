@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://cbgp66xfaukdx"]
 
 [ext_resource type="Texture2D" uid="uid://dtsmmhvern6gq" path="res://assets/tilesets/TilesetWater.png" id="1_0wfyh"]
-[ext_resource type="PackedScene" uid="uid://bqitc5oma25ig" path="res://scenes/characters/player_main.tscn" id="2_sugp2"]
+[ext_resource type="PackedScene" uid="uid://bqitc5oma25ig" path="res://scenes/player/player_main.tscn" id="2_sugp2"]
 [ext_resource type="Texture2D" uid="uid://nj1sy1mxlcjp" path="res://assets/tilesets/TilesetWallSimple.png" id="2_tefeu"]
 [ext_resource type="Script" uid="uid://dlu3bcwi3xnf1" path="res://scripts/interactable.gd" id="3_2bs0q"]
 [ext_resource type="Texture2D" uid="uid://cocp0j5aqu1d2" path="res://assets/sprites/Shrimp.png" id="4_tbgi4"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://b7eto5tcf7ugl" path="res://assets/tilesets/tileset_bed.png" id="7_o6xl0"]
 [ext_resource type="Texture2D" uid="uid://dj8laekrnuh65" path="res://assets/tilesets/TilesetElement.png" id="8_tipki"]
 [ext_resource type="PackedScene" path="res://scenes/ui/inventory/InventoryPanel.tscn" id="9_inventory"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud/TimeHud.tscn" id="10_time_hud"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jyhfs"]
 texture = ExtResource("1_0wfyh")
@@ -403,10 +404,13 @@ tile_set = SubResource("TileSet_x0akl")
 [node name="BrewBarrel" type="Area2D" parent="." unique_id=149646999]
 position = Vector2(116, 495)
 script = ExtResource("3_2bs0q")
-prompt_text = "Press E: Check brewing barrel"
-action_text = "You checked the brewing barrel."
+prompt_text = "按 E：酿酒"
+action_text = "你查看了酿酒桶。"
 opens_menu = true
-menu_id = "brewing_barrel"
+menu_id = "task_confirm"
+activity_id = "brew"
+activity_title = "酿酒"
+activity_description = "是否进行一次酿酒准备？当前版本会消耗 1 个时间点。"
 
 [node name="Sprite2D" type="Sprite2D" parent="BrewBarrel" unique_id=1054809025]
 position = Vector2(4.7683716e-07, -6.198883e-06)
@@ -421,13 +425,18 @@ offset_left = -64.0
 offset_top = -56.0
 offset_right = 160.0
 offset_bottom = -33.0
-text = "Press E: Check brewing barrel"
+text = "按 E：酿酒"
 
 [node name="SugarCrate" type="Area2D" parent="." unique_id=1303342099]
 position = Vector2(1100, 400)
 script = ExtResource("3_2bs0q")
-prompt_text = "Press E: Check sugar crate"
-action_text = "You checked the sugar crate."
+prompt_text = "按 E：交易"
+action_text = "你走到交易柜台前。"
+opens_menu = true
+menu_id = "task_confirm"
+activity_id = "trade"
+activity_title = "交易"
+activity_description = "是否进行交易？交易只能在白天进行，会消耗 1 个时间点。"
 
 [node name="Sprite2D" type="Sprite2D" parent="SugarCrate" unique_id=1630800977]
 scale = Vector2(3, 3)
@@ -441,13 +450,18 @@ offset_left = -64.0
 offset_top = -56.0
 offset_right = 160.0
 offset_bottom = -33.0
-text = "Press E: Check sugar crate"
+text = "按 E：交易"
 
 [node name="MushroomCaveDoor" type="Area2D" parent="." unique_id=1727109347]
 position = Vector2(1100, 300)
 script = ExtResource("3_2bs0q")
-prompt_text = "Press E: Check mushroom cave"
-action_text = "You checked the mushroom cave."
+prompt_text = "按 E：战斗采集"
+action_text = "你准备外出探索。"
+opens_menu = true
+menu_id = "task_confirm"
+activity_id = "battle_gather"
+activity_title = "战斗采集"
+activity_description = "是否外出战斗采集？可在白天、傍晚和夜晚进行，会消耗 1 个时间点。"
 
 [node name="Sprite2D" type="Sprite2D" parent="MushroomCaveDoor" unique_id=2028364050]
 scale = Vector2(3, 3)
@@ -458,7 +472,7 @@ offset_left = -78.0
 offset_top = -56.0
 offset_right = 160.0
 offset_bottom = -33.0
-text = "Press E: Check mushroom cave"
+text = "按 E：战斗采集"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MushroomCaveDoor" unique_id=1411564953]
 shape = SubResource("CircleShape2D_interact")
@@ -466,8 +480,13 @@ shape = SubResource("CircleShape2D_interact")
 [node name="Bed" type="Area2D" parent="." unique_id=1723287138]
 position = Vector2(188, 133)
 script = ExtResource("3_2bs0q")
-prompt_text = "Press E: Check bed"
-action_text = "You checked the bed."
+prompt_text = "按 E：睡觉"
+action_text = "你走到床边。"
+opens_menu = true
+menu_id = "task_confirm"
+activity_id = "sleep"
+activity_title = "睡觉"
+activity_description = "是否睡觉？只能在夜晚，或昨晚没睡后的第二天清晨进行。"
 
 [node name="Sprite2D" type="Sprite2D" parent="Bed" unique_id=1233982179]
 scale = Vector2(2, 2)
@@ -483,13 +502,18 @@ offset_left = -35.0
 offset_top = -64.0
 offset_right = 120.0
 offset_bottom = -41.0
-text = "Press E: Sleep"
+text = "按 E：睡觉"
 
 [node name="Table" type="Area2D" parent="." unique_id=771220089]
 position = Vector2(842, 94)
 script = ExtResource("3_2bs0q")
-prompt_text = "Press E: Check table"
-action_text = "You checked the table."
+prompt_text = "按 E：酒馆营业"
+action_text = "你走到餐桌旁。"
+opens_menu = true
+menu_id = "task_confirm"
+activity_id = "tavern_service"
+activity_title = "酒馆营业"
+activity_description = "是否开始酒馆营业？酒馆营业只能在傍晚进行，会消耗 1 个时间点。"
 
 [node name="Sprite2D" type="Sprite2D" parent="Table" unique_id=128673009]
 scale = Vector2(6.001, 4)
@@ -506,7 +530,7 @@ offset_left = -56.0
 offset_top = -56.0
 offset_right = 160.0
 offset_bottom = -33.0
-text = "Press E: Check table"
+text = "按 E：酒馆营业"
 
 [node name="Warehouse" type="Area2D" parent="." unique_id=1496442359]
 position = Vector2(306, 494)
@@ -529,6 +553,33 @@ offset_top = -56.0
 offset_right = 160.0
 offset_bottom = -33.0
 text = "Press E: Open warehouse"
+
+[node name="ArenaEntrance" type="Area2D" parent="."]
+position = Vector2(1100, 500)
+script = ExtResource("3_2bs0q")
+prompt_text = "按 E：竞技场"
+action_text = "你走到竞技场入口。"
+opens_menu = true
+menu_id = "task_confirm"
+activity_id = "arena"
+activity_title = "竞技场竞技"
+activity_description = "是否参加竞技场竞技？竞技场只能在夜晚进行，会消耗 1 个时间点。"
+
+[node name="Sprite2D" type="Sprite2D" parent="ArenaEntrance"]
+scale = Vector2(3, 3)
+texture = ExtResource("4_tbgi4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ArenaEntrance"]
+shape = SubResource("CircleShape2D_interact")
+
+[node name="PromptLabel" type="Label" parent="ArenaEntrance"]
+offset_left = -64.0
+offset_top = -56.0
+offset_right = 160.0
+offset_bottom = -33.0
+text = "按 E：竞技场"
+
+[node name="TimeHud" parent="." instance=ExtResource("10_time_hud")]
 
 [node name="InventoryPanel" parent="." unique_id=1628114419 instance=ExtResource("9_inventory")]
 

@@ -2,16 +2,43 @@
 
 [ext_resource type="Script" uid="uid://dwpg1powbyyc4" path="res://scripts/player_main.gd" id="1_ldew8"]
 [ext_resource type="Texture2D" uid="uid://dpysp2k0no7ef" path="res://assets/sprites/Item.png" id="2_0yo0i"]
+[ext_resource type="Texture2D" uid="uid://cwkw4t7ivrcuw" path="res://assets/sprites/Shadow.png" id="2_d5b8g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_56mf0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7da6m"]
+animations = [{
+"frames": [],
+"loop": 1,
+"name": &"idle_down",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"idle_left",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"idle_right",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"idle_up",
+"speed": 5.0
+}]
 
 [node name="Player_Main" type="CharacterBody2D" unique_id=1886580640]
 script = ExtResource("1_ldew8")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2140404415]
-scale = Vector2(2, 2)
+position = Vector2(0, 20)
+scale = Vector2(3, 3)
+texture = ExtResource("2_d5b8g")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=962186458]
+visible = false
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_56mf0")
 
@@ -19,3 +46,7 @@ shape = SubResource("RectangleShape2D_56mf0")
 position = Vector2(-3.59e-43, -2.3841858e-07)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("2_0yo0i")
+
+[node name="AnimateSprite" type="AnimatedSprite2D" parent="." unique_id=1898623139]
+sprite_frames = SubResource("SpriteFrames_7da6m")
+animation = &"idle_down"

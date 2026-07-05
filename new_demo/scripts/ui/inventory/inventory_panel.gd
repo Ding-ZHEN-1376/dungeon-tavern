@@ -29,6 +29,10 @@ func hide_panel() -> void:
 	panel.visible = false
 
 
+func is_panel_visible() -> bool:
+	return panel.visible
+
+
 func toggle_panel() -> void:
 	panel.visible = not panel.visible
 

@@ -7,15 +7,27 @@ const WAREHOUSE_SLOT_COUNT := 40
 @onready var slots_grid: GridContainer = %SlotsGrid
 @onready var close_button: Button = %CloseButton
 
+var inventory_panel: Node = null
+var inventory_panel_auto_opened := false
+
 
 func _ready() -> void:
 	slots_grid.columns = WAREHOUSE_COLUMNS
 	_create_slots()
 	close_button.pressed.connect(_on_close_button_pressed)
 
-	var inventory_panel := get_tree().get_first_node_in_group("inventory_panel")
+	inventory_panel = get_tree().get_first_node_in_group("inventory_panel")
 	if inventory_panel != null and inventory_panel.has_method("show_panel"):
+		var was_visible := false
+		if inventory_panel.has_method("is_panel_visible"):
+			was_visible = inventory_panel.is_panel_visible()
 		inventory_panel.show_panel()
+		inventory_panel_auto_opened = not was_visible
+
+
+func _exit_tree() -> void:
+	if inventory_panel_auto_opened and is_instance_valid(inventory_panel) and inventory_panel.has_method("hide_panel"):
+		inventory_panel.hide_panel()
 
 
 func _create_slots() -> void:
