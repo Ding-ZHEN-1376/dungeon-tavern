@@ -129,7 +129,10 @@ func _get_inventory_system():
 	if inventory_system != null:
 		return inventory_system
 	if is_inside_tree():
-		return get_node_or_null("/root/MaterialInventory")
+		var player_inventory := get_tree().get_first_node_in_group("player_inventory")
+		if player_inventory == null:
+			push_warning("ActivitySystem could not find a node in group 'player_inventory'.")
+		return player_inventory
 	return null
 
 
@@ -137,8 +140,11 @@ func _apply_rewards(rewards: Array) -> void:
 	var inventory = _get_inventory_system()
 	if inventory == null:
 		return
+	if not inventory.has_method("add_item"):
+		push_warning("ActivitySystem inventory target does not expose add_item(item_id, amount).")
+		return
 	for reward in rewards:
-		inventory.add_item_to_container("backpack", String(reward["item_id"]), int(reward["count"]))
+		inventory.add_item(String(reward["item_id"]), int(reward["count"]))
 
 
 func _fail(message: String) -> Dictionary:

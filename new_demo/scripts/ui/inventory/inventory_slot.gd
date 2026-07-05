@@ -1,39 +1,41 @@
 extends PanelContainer
 
 const MaterialDatabaseScript := preload("res://scripts/systems/material_database.gd")
+const InventoryTransferScript := preload("res://scripts/inventory/inventory_transfer.gd")
 
-@export var container_name: String = "backpack"
 @export var slot_index: int = 0
 
 @onready var icon_texture: TextureRect = %IconTexture
 @onready var count_label: Label = %CountLabel
 
+var inventory_container: Node = null
+
 
 func _ready() -> void:
-	if MaterialInventory.inventory_changed.is_connected(refresh):
-		MaterialInventory.inventory_changed.disconnect(refresh)
-	MaterialInventory.inventory_changed.connect(refresh)
+	_connect_inventory_changed()
 	refresh()
 
 
-func setup(new_container_name: String, new_slot_index: int) -> void:
-	container_name = new_container_name
+func setup(new_inventory_container: Node, new_slot_index: int) -> void:
+	_disconnect_inventory_changed()
+	inventory_container = new_inventory_container
 	slot_index = new_slot_index
 	if is_node_ready():
+		_connect_inventory_changed()
 		refresh()
 
 
 func refresh() -> void:
-	var slot := MaterialInventory.get_slot(container_name, slot_index)
+	if inventory_container == null or not inventory_container.has_method("get_slot"):
+		_show_empty_slot()
+		return
+
+	var slot: Dictionary = inventory_container.get_slot(slot_index)
 	var material_id := String(slot.get("id", ""))
 	var count := int(slot.get("count", 0))
 
 	if material_id == "" or count <= 0:
-		icon_texture.texture = null
-		icon_texture.visible = false
-		count_label.text = ""
-		count_label.visible = false
-		tooltip_text = ""
+		_show_empty_slot()
 		return
 
 	var icon_path := MaterialDatabaseScript.get_icon_path(material_id)
@@ -45,7 +47,10 @@ func refresh() -> void:
 
 
 func _get_drag_data(_at_position: Vector2) -> Variant:
-	var slot := MaterialInventory.get_slot(container_name, slot_index)
+	if inventory_container == null or not inventory_container.has_method("get_slot"):
+		return null
+
+	var slot: Dictionary = inventory_container.get_slot(slot_index)
 	if String(slot.get("id", "")) == "" or int(slot.get("count", 0)) <= 0:
 		return null
 
@@ -57,19 +62,48 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	set_drag_preview(preview)
 
 	return {
-		"container": container_name,
+		"container_node": inventory_container,
 		"slot_index": slot_index
 	}
 
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
-	return data is Dictionary and data.has("container") and data.has("slot_index")
+	return (
+		data is Dictionary
+		and data.has("container_node")
+		and data.has("slot_index")
+		and inventory_container != null
+	)
 
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
-	MaterialInventory.move_stack(
-		String(data["container"]),
+	InventoryTransferScript.move_stack(
+		data["container_node"] as Node,
 		int(data["slot_index"]),
-		container_name,
+		inventory_container,
 		slot_index
 	)
+
+
+func _connect_inventory_changed() -> void:
+	if inventory_container == null or not inventory_container.has_signal("inventory_changed"):
+		return
+	var refresh_callable := Callable(self, "refresh")
+	if not inventory_container.is_connected("inventory_changed", refresh_callable):
+		inventory_container.connect("inventory_changed", refresh_callable)
+
+
+func _disconnect_inventory_changed() -> void:
+	if inventory_container == null or not inventory_container.has_signal("inventory_changed"):
+		return
+	var refresh_callable := Callable(self, "refresh")
+	if inventory_container.is_connected("inventory_changed", refresh_callable):
+		inventory_container.disconnect("inventory_changed", refresh_callable)
+
+
+func _show_empty_slot() -> void:
+	icon_texture.texture = null
+	icon_texture.visible = false
+	count_label.text = ""
+	count_label.visible = false
+	tooltip_text = ""

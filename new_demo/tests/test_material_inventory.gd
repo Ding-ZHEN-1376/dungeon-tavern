@@ -5,6 +5,7 @@ const MaterialInventoryScript := preload("res://scripts/systems/material_invento
 
 func _init() -> void:
 	var inventory := MaterialInventoryScript.new()
+	get_root().add_child(inventory)
 	inventory.reset_inventory(false)
 
 	_assert_eq(inventory.backpack_slots.size(), 15, "Backpack should have 15 slots.")

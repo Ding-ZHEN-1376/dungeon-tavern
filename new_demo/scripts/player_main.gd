@@ -2,7 +2,7 @@
 extends CharacterBody2D
 
 # 移动速度
-const SPEED: float = 120.0
+@export var SPEED: float = 120.0
 
 var current_interactable: Node = null
 
