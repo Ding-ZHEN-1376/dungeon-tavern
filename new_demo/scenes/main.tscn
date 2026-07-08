@@ -408,7 +408,7 @@ script = ExtResource("3_2bs0q")
 prompt_text = "按 E：酿酒"
 action_text = "你查看了酿酒桶。"
 opens_menu = true
-menu_id = "task_confirm"
+menu_id = "brewing_barrel"
 activity_id = "brew"
 activity_title = "酿酒"
 activity_description = "是否进行一次酿酒准备？当前版本会消耗 1 个时间点。"
@@ -591,7 +591,7 @@ text = "按 E：竞技场"
 
 [node name="Player_Main" parent="." unique_id=1886580640 instance=ExtResource("2_sugp2")]
 position = Vector2(576, 320)
-SPEED = 180.0
+SPEED = 200.0
 
 [node name="InventoryContainer" type="Node" parent="Player_Main" unique_id=185161758 groups=["player_inventory"]]
 script = ExtResource("8_ya4ey")

@@ -14,12 +14,14 @@ func _ready() -> void:
 
 ## 释放开始酿酒动作信号，暂不连接实际酿酒系统。
 func _on_start_button_pressed() -> void:
-	emit_action("start_brewing")
+	MenuManager.open_menu("brewing_research", {
+		"recipe_id": "dungeon_mushroom"
+	})
 
 
 ## 释放查看配方动作信号，暂不连接实际配方系统。
 func _on_recipe_button_pressed() -> void:
-	emit_action("open_recipe")
+	MenuManager.open_menu("brewing_production")
 
 
 ## 释放关闭动作信号，并关闭当前菜单 UI。

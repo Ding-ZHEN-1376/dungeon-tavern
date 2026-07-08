@@ -33,12 +33,12 @@ animations = [{
 script = ExtResource("1_ldew8")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2140404415]
+visible = false
 position = Vector2(0, 20)
 scale = Vector2(3, 3)
 texture = ExtResource("2_d5b8g")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=962186458]
-visible = false
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_56mf0")
 
@@ -48,5 +48,6 @@ scale = Vector2(2.5, 2.5)
 texture = ExtResource("2_0yo0i")
 
 [node name="AnimateSprite" type="AnimatedSprite2D" parent="." unique_id=1898623139]
+visible = false
 sprite_frames = SubResource("SpriteFrames_7da6m")
 animation = &"idle_down"

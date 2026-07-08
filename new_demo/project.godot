@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 MenuManager="*res://scenes/ui/MenuManager.tscn"
 MaterialInventory="*res://scripts/systems/material_inventory.gd"
+BrewingRecipeBook="*res://scripts/systems/brewing/brewing_recipe_book.gd"
 TimeSystem="*res://scripts/systems/time_system.gd"
 ActivitySystem="*res://scripts/systems/activity_system.gd"
 

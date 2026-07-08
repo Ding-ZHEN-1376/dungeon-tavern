@@ -32,6 +32,14 @@ func reset_inventory(include_demo_items: bool = true) -> void:
 		add_item_to_container("backpack", "low_grade_sugar", 12)
 		add_item_to_container("backpack", "mushroom", 5)
 		add_item_to_container("backpack", "wine", 1)
+		add_item_to_container("backpack", "water", 8)
+		add_item_to_container("backpack", "rye", 8)
+		add_item_to_container("backpack", "basic_water", 8)
+		add_item_to_container("backpack", "advanced_water", 2)
+		add_item_to_container("backpack", "basic_wheat", 8)
+		add_item_to_container("backpack", "advanced_wheat", 2)
+		add_item_to_container("backpack", "cave_red_mushroom", 8)
+		add_item_to_container("backpack", "cave_blue_mushroom", 8)
 
 	inventory_changed.emit()
 
@@ -74,6 +82,45 @@ func set_slot(container_name: String, slot_index: int, material_id: String, coun
 		return
 	container.set_slot(slot_index, material_id, count)
 	inventory_changed.emit()
+
+
+func get_item_count(container_name: String, material_id: String) -> int:
+	var total := 0
+	for slot in get_slots(container_name):
+		if String(slot.get("id", "")) == material_id:
+			total += int(slot.get("count", 0))
+	return total
+
+
+func consume_item_from_container(container_name: String, material_id: String, amount: int) -> bool:
+	if material_id == "" or amount <= 0:
+		return false
+	if get_item_count(container_name, material_id) < amount:
+		return false
+
+	var container := _get_container(container_name)
+	if container == null or not container.has_method("get_slots") or not container.has_method("set_slot"):
+		return false
+
+	var remaining := amount
+	var slots: Array = container.get_slots()
+	for index in range(slots.size()):
+		if remaining <= 0:
+			break
+		var slot: Dictionary = slots[index]
+		if String(slot.get("id", "")) != material_id:
+			continue
+		var slot_count := int(slot.get("count", 0))
+		var used: int = min(slot_count, remaining)
+		slot_count -= used
+		remaining -= used
+		if slot_count <= 0:
+			container.set_slot(index, "", 0)
+		else:
+			container.set_slot(index, material_id, slot_count)
+
+	inventory_changed.emit()
+	return true
 
 
 func _get_container(container_name: String) -> Node:

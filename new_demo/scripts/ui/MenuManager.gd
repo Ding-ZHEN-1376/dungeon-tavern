@@ -4,6 +4,8 @@ var current_menu: Control = null
 
 var menu_registry := {
 	"brewing_barrel": preload("res://scenes/ui/menus/brewing/BrewingMenu.tscn"),
+	"brewing_research": preload("res://scenes/ui/menus/brewing/BrewingResearchMenu.tscn"),
+	"brewing_production": preload("res://scenes/ui/menus/brewing/BrewingProductionMenu.tscn"),
 	"warehouse": preload("res://scenes/ui/menus/storage/WarehouseMenu.tscn"),
 	"task_confirm": preload("res://scenes/ui/menus/task_confirm/TaskConfirmMenu.tscn")
 }
